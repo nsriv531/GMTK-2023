@@ -50,35 +50,39 @@ public class PlayerBalls : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-
+            rb.velocity = new Vector2(-thrust, rb.velocity.y);
             // moveLeft = true;
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-
+            rb.velocity = new Vector2(rb.velocity.x, -thrust);
             // moveDown = true;
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-
+            rb.velocity = new Vector2(thrust, rb.velocity.y);
             // moveRight = true;
         }
 
-        // if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
-        // {
-        //     moveUp = false;
-        // }
-        // if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
-        // {
-        //     moveLeft = false;
-        // }
-        // if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
-        // {
-        //     moveDown = false;
-        // }
-        // if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
-        // {
-        //     moveRight = false;
-        // }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            // moveUp = false;
+        }
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            // moveLeft = false;
+        }
+        if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            // moveDown = false;
+        }
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            // moveRight = false;
+        }
     }
 }
