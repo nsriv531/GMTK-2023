@@ -33,7 +33,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     [SerializeField]
     private Transform netPosition;
     public bool isHit;
-    private float onHitTravelDuration = 1f;
+    private float onHitTravelDuration = 2f;
     public float onHitElapseTravelTime;
     private Vector2 positionWhenHit;
     [SerializeField]
@@ -135,7 +135,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
         rb.transform.Rotate(0.0f, 180f, 0.0f);
         return rotation;
     }
-    public Vector3 CheckIfShouldFlip(int XInput)
+    private Vector3 CheckIfShouldFlip(int XInput)
     {
         if (XInput != 0 && XInput != facingDirection)
         {
@@ -143,7 +143,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
         }
         return new Vector3(0, 0, 0);
     }
-    public void CalculateMovementDirection()
+    private void CalculateMovementDirection()
     {
         rawMovemntDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (rawMovemntDirection.x != 0 && rawMovemntDirection.y == 0)
@@ -187,7 +187,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
         }
         
     }
-    public void DashActivated()
+    private void DashActivated()
     {
         isDashing = true;
 
@@ -199,7 +199,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
 
         speed += dashSpeedBoostAmount;
     }
-    public void DashDisabled()
+    private void DashDisabled()
     {
 
         isDashing = false;
@@ -214,7 +214,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
 
         speed -= dashSpeedBoostAmount;
     }
-    public IEnumerator OnHitMovement()
+    private IEnumerator OnHitMovement()
     {
         float percentageOfTravelCompleted = 0;
         Debug.Log("ji");
@@ -225,10 +225,11 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
             percentageOfTravelCompleted = onHitElapseTravelTime / onHitTravelDuration;
             Debug.Log("ji");
 
-            rb.MovePosition(Vector3.Lerp(positionWhenHit, netPosition.position, curve.Evaluate(percentageOfTravelCompleted)))  ;
+            rb.MovePosition(Vector3.Slerp(positionWhenHit, netPosition.position, curve.Evaluate(percentageOfTravelCompleted)))  ;
 
             yield return null;
         }
+        onHitElapseTravelTime = 0 ;
     }
 }
 
