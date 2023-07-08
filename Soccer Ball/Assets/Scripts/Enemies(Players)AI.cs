@@ -35,11 +35,11 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        Debug.Log(angle);
+       // Debug.Log(angle);
 
         anime.SetBool("Up", (angle >= 45 && angle <= 135));
         anime.SetBool("Down", (angle <= -45 && angle >= -135));
-        anime.SetBool("Left", (angle >= 135 && angle <= -135));
+        anime.SetBool("Left", (angle >= 135 || angle <= -135));
         anime.SetBool("Right", (angle <= 45 && angle >= -45));
 
 
