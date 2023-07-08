@@ -48723,10 +48723,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2441473226430958452, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
-      propertyPath: m_Autodestruct
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2615604656532629356, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
       propertyPath: m_Name
       value: ' Player Ball'
@@ -48774,22 +48770,6 @@ PrefabInstance:
     - target: {fileID: 3357403854503175167, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3611796920766174241, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
-      propertyPath: thrust
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3611796920766174241, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6921961944787099411, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
-      propertyPath: netPosition
-      value: 
-      objectReference: {fileID: 1262684036}
-    - target: {fileID: 8951835913929999625, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
-      propertyPath: speed
-      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8951835913929999625, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
       propertyPath: netPosition
