@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemiesPlayersAI : MonoBehaviour
+public class EnemiesPlayersAI : MonoBehaviour,IDamagable
 {
 
     public Rigidbody2D rb;
@@ -43,5 +43,12 @@ public class EnemiesPlayersAI : MonoBehaviour
         anime.SetBool("Right", (angle <= 45 && angle >= -45));
 
 
+    }
+
+    public void TakeDamage()
+    {
+        ///takes damge
+        Debug.Log("im Hit!!!");
+       
     }
 }
