@@ -19,7 +19,7 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     public GameObject ball;
     private float distance;
     public Animator anime;
-
+    public bool kick = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,14 +41,43 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         anime.SetBool("Down", (angle <= -45 && angle >= -135));
         anime.SetBool("Left", (angle >= 135 || angle <= -135));
         anime.SetBool("Right", (angle <= 45 && angle >= -45));
-
-
+        anime.SetBool("Kick", kick);
     }
 
     public void TakeDamage()
     {
         ///takes damge
-        Debug.Log("im Hit!!!");
-       
+        Destroy(gameObject);
+        //Debug.Log("im Hit!!!");
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+          
+    }
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject == ball) { 
+            kick = true;
+        }
+    }
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+
+    }
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+
+    }
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject == ball)
+        {
+            kick = false;
+        }
     }
 }

@@ -57,7 +57,8 @@ GameObject:
   - component: {fileID: 240997861981405210}
   - component: {fileID: 6717112082386650200}
   - component: {fileID: 8925687768661563303}
-  - component: {fileID: 6765669741522469647}
+  - component: {fileID: 6921961944787099411}
+  - component: {fileID: 2441473226430958452}
   - component: {fileID: 8951835913929999625}
   m_Layer: 0
   m_Name: Player Ball
@@ -168,9 +169,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 1
-  m_AngularDrag: 1
+  m_Mass: 1.5
+  m_LinearDrag: 1.5
+  m_AngularDrag: 1.5
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -182,7 +183,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &8925687768661563303
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -218,7 +219,31 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.7
---- !u!96 &6765669741522469647
+--- !u!114 &6921961944787099411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2615604656532629356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b4d1f106564c224896f1747d5dd7a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isControlsEnabled: 0
+  speed: 25
+  dashDuration: 4
+  netPosition: {fileID: 0}
+  isHit: 0
+  onHitElapseTravelTime: 0
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!96 &2441473226430958452
 TrailRenderer:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -226,7 +251,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2615604656532629356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 0

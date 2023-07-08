@@ -212,14 +212,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a5ad70ed15d3c4c9c164d605e56008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rb: {fileID: 2012772955668941382}
   bC1: {fileID: 4825528052280954310}
   bC2: {fileID: 494191189590832643}
   xv: 0
   yv: 0
   speed: 1
-  ball: {fileID: 2615604656532629356, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
+  ball: {fileID: 0}
   anime: {fileID: 8641007776922254263}
+  kick: 0
 --- !u!50 &2012772955668941382
 Rigidbody2D:
   serializedVersion: 4
