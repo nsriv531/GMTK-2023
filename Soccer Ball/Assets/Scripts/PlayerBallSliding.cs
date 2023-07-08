@@ -32,6 +32,8 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     #region Hitlogic
     [SerializeField]
     private Transform netPosition;
+    [SerializeField]
+    private Transform previouseStageEntrance;
     public bool isHit;
     private float onHitTravelDuration = 1f;
     public float onHitElapseTravelTime;
@@ -98,6 +100,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
 
         if(movemntDirection == Vector2.zero)
         {
+            CheckIfShouldFlip((int)rb.velocity.x);
             anime.SetFloat("YAxisRoll", Mathf.Abs(rb.velocity.y));
             anime.SetFloat("Xaxisroll", Mathf.Abs(rb.velocity.x));
 
@@ -180,12 +183,23 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     public void TakeDamage()
     {
         positionWhenHit = transform.position;
-        isHit = true;
-          StartCoroutine( OnHitMovement());
+        isControlsEnabled = false;
         if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
         {
+            if(!isHit)
+            {
+                isHit = true;
+              StartCoroutine(OnHitMovement(netPosition));
+
+            }
         }
-        
+        else
+        {
+            if(isHit)
+                 StartCoroutine(OnHitMovement(previouseStageEntrance));
+
+        }
+
     }
     private void DashActivated()
     {
@@ -214,23 +228,34 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
 
         speed -= dashSpeedBoostAmount;
     }
-    private IEnumerator OnHitMovement()
+    /// <summary>
+    /// moves the ball to a location when it is hit
+    /// </summary>
+    /// <param name="Destination"> either the net, or the entrance to the previous map</param>
+    /// 
+    /// <returns></returns>
+    private IEnumerator OnHitMovement(Transform Destination)
     {
         float percentageOfTravelCompleted = 0;
+        Physics2D.IgnoreLayerCollision(0, 6,true);
         Debug.Log("ji");
 
         while (percentageOfTravelCompleted <= 1)
         {
             onHitElapseTravelTime += Time.deltaTime;
             percentageOfTravelCompleted = onHitElapseTravelTime / onHitTravelDuration;
-            Debug.Log("ji");
 
-            rb.MovePosition(Vector3.Lerp(positionWhenHit, netPosition.position, curve.Evaluate(percentageOfTravelCompleted)))  ;
+            rb.MovePosition(Vector3.Lerp(positionWhenHit, Destination.position, curve.Evaluate(percentageOfTravelCompleted)))  ;
 
             yield return null;
         }
         onHitElapseTravelTime = 0 ;
+        Physics2D.IgnoreLayerCollision(0, 6, false);
+        isHit = false;
+        isControlsEnabled = true;
     }
+    
+    
 }
 
 
