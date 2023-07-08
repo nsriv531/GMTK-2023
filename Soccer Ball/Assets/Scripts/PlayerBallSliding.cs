@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerBallSliding : MonoBehaviour,IDamagable
+public class PlayerBallSliding : MonoBehaviour
 {
 
     #region Refranceses
