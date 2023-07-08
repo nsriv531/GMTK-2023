@@ -7,6 +7,7 @@ public class PlayerBalls : MonoBehaviour
 {
 
     public Rigidbody2D rb;
+    public Animator anime;
     // public float moveSpeed = 3;
     // private bool moveUp = false;
     // private bool moveDown = false;
@@ -100,5 +101,10 @@ public class PlayerBalls : MonoBehaviour
         {
             dashing = 1f;
         }
+
+        anime.SetBool("Up", (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)));
+        anime.SetBool("Down", (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)));
+        anime.SetBool("Left", (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)));
+        anime.SetBool("Right", (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)));
     }
 }
