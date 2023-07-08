@@ -8,6 +8,7 @@ public class PlayerBalls : MonoBehaviour
 
     public Rigidbody2D rb;
     public Animator anime;
+    private AttackComponent attack;
     // public float moveSpeed = 3;
     // private bool moveUp = false;
     // private bool moveDown = false;
@@ -28,7 +29,7 @@ public class PlayerBalls : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        attack= GetComponentInChildren<AttackComponent>();
         transform.position = new Vector3(0.0f, -2.0f, 0.0f);
     }
 
@@ -96,6 +97,8 @@ public class PlayerBalls : MonoBehaviour
         if (dashing >= 1)
         {
             dashing -= Time.deltaTime;
+            attack.AattackTheEnemy();
+
         }
         if (dashing <= 1)
         {

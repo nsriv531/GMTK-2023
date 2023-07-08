@@ -1,123 +1,234 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerBallSliding : MonoBehaviour
+public class PlayerBallSliding : MonoBehaviour,IDamagable
 {
 
+    #region Refranceses
+    private Rigidbody2D rb;
+    private Animator anime;
+    private AttackComponent attack;
+    private TrailRenderer trailRenderer;
+    private SpriteRenderer ballSprite;
+    #endregion
+    #region DashAndMovement
 
-    public Rigidbody2D rb;
-    public Animator anime;
-    // public float moveSpeed = 3;
-    // private bool moveUp = false;
-    // private bool moveDown = false;
-    // private bool moveLeft = false;
-    // private bool moveRight = false;
-    public float thrust = 1f;
-    public float dashMax = 5f;
+    public bool isControlsEnabled;
 
-    public bool canFire = false;
-    public float timer = 0;
-    public float fireRate = 3;
-    public float dashing = 1;
+    public float speed = 20f;
+    private float dashSpeedBoostAmount = 25f;
 
-    private float xv = 0;
-    private float yv = 0;
+    private bool isDashing;
+    [SerializeField]
+    private float dashDuration;
+    private float dashtimer;
+
+    private Vector2 rawMovemntDirection;
+    private Vector2 movemntDirection;
+    private int facingDirection;
+    #endregion
+    #region Hitlogic
+    [SerializeField]
+    private Transform netPosition;
+    public bool isHit;
+    private float onHitTravelDuration = 1f;
+    public float onHitElapseTravelTime;
+    private Vector2 positionWhenHit;
+    [SerializeField]
+    private AnimationCurve curve;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        isControlsEnabled = true;
+        facingDirection = 1;
+        dashtimer = dashDuration;
         rb = GetComponent<Rigidbody2D>();
-
+        anime= GetComponent<Animator>();
+        attack= GetComponentInChildren<AttackComponent>();
+        trailRenderer= GetComponent<TrailRenderer>();
+        ballSprite= GetComponent<SpriteRenderer>();
         transform.position = new Vector3(0.0f, -2.0f, 0.0f);
+        trailRenderer.enabled = true;
     }
 
+    private void Update()
+    {
+        if(isControlsEnabled)
+        {
+            CheckIfShouldFlip((int)rawMovemntDirection.x);
+            CalculateMovementDirection();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!isDashing)
+                {
+                    DashActivated();
+                }
+
+            }
+            if(Input.GetKeyDown(KeyCode.C))
+            {
+                TakeDamage();
+            }
+
+        }
+
+
+
+    }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
-        // if (moveUp)
-        // {
-        //     gameObject.transform.position = transform.position + (Vector3.up * moveSpeed) * Time.deltaTime;
-        // }
-        // if (moveLeft)
-        // {
-        //     gameObject.transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
-        // }
-        // if (moveDown)
-        // {
-        //     gameObject.transform.position = transform.position + (Vector3.down * moveSpeed) * Time.deltaTime;
-        // }
-        // if (moveRight)
-        // {
-        //     gameObject.transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
-        // }
 
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            rb.velocity = Vector2.zero;
-            rb.AddForce(Vector2.up.normalized * thrust, ForceMode2D.Impulse);
-        }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            rb.velocity = Vector2.zero;
+       
 
-            rb.AddForce(Vector2.down.normalized * thrust, ForceMode2D.Impulse);
+        MoveCharacter(movemntDirection);
+
+
+       
+
+        
+
+        DashTImer();
+
+        if(movemntDirection == Vector2.zero)
+        {
+            anime.SetFloat("YAxisRoll", Mathf.Abs(rb.velocity.y));
+            anime.SetFloat("Xaxisroll", Mathf.Abs(rb.velocity.x));
+
         }
         else
         {
-            yv = 0;
+            anime.SetFloat("YAxisRoll", Mathf.Abs(movemntDirection.y));
+            anime.SetFloat("Xaxisroll", Mathf.Abs(movemntDirection.x));
         }
+        
+    }
+    public void MoveCharacter(Vector2 direction)
+    {
+        
+        rb.AddForce(direction.normalized * speed);
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+    }
+    public void DashTImer()
+    {
+        if(isDashing && dashtimer > 0)
         {
-            rb.velocity = Vector2.zero;
-
-            rb.AddForce(Vector2.left.normalized * thrust, ForceMode2D.Force);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            rb.velocity = Vector2.zero;
-
-            rb.AddForce(Vector2.right.normalized * thrust, ForceMode2D.Force);
-        }
-        else
-        {
-            xv = 0;
-        }
-
-
-        // rb.velocity = new Vector2(xv, yv) * dashing;
-
-        if (!canFire)
-        {
-            timer += Time.deltaTime;
-            if (timer > fireRate)
+            attack.AattackTheEnemy();
+            dashtimer -= Time.deltaTime;
+            if(dashtimer <= 0)
             {
-                canFire = true;
-                timer = 0;
+                DashDisabled();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+    }
+    private Vector2 Flip()
+    {
+        facingDirection *= -1;
+        Vector3 rotation = new Vector3(0.0f, 180.0f, 0f);
+        rb.transform.Rotate(0.0f, 180f, 0.0f);
+        return rotation;
+    }
+    public Vector3 CheckIfShouldFlip(int XInput)
+    {
+        if (XInput != 0 && XInput != facingDirection)
         {
-            canFire = false;
-            dashing = dashMax;
+            return Flip();
         }
-
-        if (dashing >= 1)
+        return new Vector3(0, 0, 0);
+    }
+    public void CalculateMovementDirection()
+    {
+        rawMovemntDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (rawMovemntDirection.x != 0 && rawMovemntDirection.y == 0)
         {
-            dashing -= Time.deltaTime;
+            movemntDirection = new Vector2(1 * facingDirection, 0);
         }
-        if (dashing <= 1)
+        else if (rawMovemntDirection.y > 0 && rawMovemntDirection.x == 0)
         {
-            dashing = 1f;
-        }
+            movemntDirection = new Vector2(0, 1);
 
-        anime.SetBool("Up", (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)));
-        anime.SetBool("Down", (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)));
-        anime.SetBool("Left", (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)));
-        anime.SetBool("Right", (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)));
+        }
+        else if (rawMovemntDirection.y < 0 && rawMovemntDirection.x == 0)
+        {
+            movemntDirection = new Vector2(0, -1);
+
+        }
+        else if (rawMovemntDirection.x != 0 && rawMovemntDirection.y > 0)
+        {
+            movemntDirection = new Vector2(1 * facingDirection, 1);
+
+        }
+        else if (rawMovemntDirection.x != 0 && rawMovemntDirection.y < 0)
+        {
+            movemntDirection = new Vector2(1 * facingDirection, -1);
+
+        }
+        else if (rawMovemntDirection.x == 0 && rawMovemntDirection.y == 0)
+        {
+            movemntDirection = new Vector2(0, 0);
+
+        }
+    }
+
+    public void TakeDamage()
+    {
+        positionWhenHit = transform.position;
+        isHit = true;
+          StartCoroutine( OnHitMovement());
+        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+        {
+        }
+        
+    }
+    public void DashActivated()
+    {
+        isDashing = true;
+
+        trailRenderer.startColor = Color.red;
+
+        ballSprite.color = Color.red;
+
+        trailRenderer.time = 0.6f;
+
+        speed += dashSpeedBoostAmount;
+    }
+    public void DashDisabled()
+    {
+
+        isDashing = false;
+
+        dashtimer = dashDuration;
+
+        trailRenderer.startColor = Color.white;
+
+        trailRenderer.time = 0.4f;
+
+        ballSprite.color = Color.white;
+
+        speed -= dashSpeedBoostAmount;
+    }
+    public IEnumerator OnHitMovement()
+    {
+        float percentageOfTravelCompleted = 0;
+        Debug.Log("ji");
+
+        while (percentageOfTravelCompleted <= 1)
+        {
+            onHitElapseTravelTime += Time.deltaTime;
+            percentageOfTravelCompleted = onHitElapseTravelTime / onHitTravelDuration;
+            Debug.Log("ji");
+
+            rb.MovePosition(Vector3.Lerp(positionWhenHit, netPosition.position, curve.Evaluate(percentageOfTravelCompleted)))  ;
+
+            yield return null;
+        }
     }
 }
 
