@@ -4,13 +4,13 @@ using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AdvanceLevel : MonoBehaviour
+public class AdvanceLevelLower : MonoBehaviour
 {
 
-    Transform placement;
-    GameObject enemies;
-    float spawnTimer = 0;
-    float spawnRate = 8;
+    public Transform placement;
+    public GameObject enemies;
+    public float spawnTimer = 0;
+    public float spawnRate = 8;
 
     private void Start()
     {
@@ -19,13 +19,16 @@ public class AdvanceLevel : MonoBehaviour
 
     void Update()
     {
+        /*Instantiate(enemies, new Vector3(40, -11, 0), new Quaternion(0, 0, 0, 0));
+*/
         if (spawnRate > spawnTimer)
         {
             spawnTimer += Time.deltaTime;
         }
         else
         {
-            Instantiate(enemies, new Vector3(40, -11, 0) , Quaternion.identity);
+            spawnTimer = 0;
+            Instantiate(enemies, placement.position, Quaternion.identity);
         }
     }
     public void OnTriggerEnter2D(Collider2D collision)
