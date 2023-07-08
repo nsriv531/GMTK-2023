@@ -33,7 +33,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     [SerializeField]
     private Transform netPosition;
     public bool isHit;
-    private float onHitTravelDuration = 2f;
+    private float onHitTravelDuration = 1f;
     public float onHitElapseTravelTime;
     private Vector2 positionWhenHit;
     [SerializeField]
@@ -225,7 +225,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
             percentageOfTravelCompleted = onHitElapseTravelTime / onHitTravelDuration;
             Debug.Log("ji");
 
-            rb.MovePosition(Vector3.Slerp(positionWhenHit, netPosition.position, curve.Evaluate(percentageOfTravelCompleted)))  ;
+            rb.MovePosition(Vector3.Lerp(positionWhenHit, netPosition.position, curve.Evaluate(percentageOfTravelCompleted)))  ;
 
             yield return null;
         }
