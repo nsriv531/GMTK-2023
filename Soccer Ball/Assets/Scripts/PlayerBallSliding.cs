@@ -41,12 +41,15 @@ public class PlayerBallSliding : MonoBehaviour
     [SerializeField]
     private AnimationCurve curve;
     #endregion
-
+    
     public float controllCoolDown = 0;
     public float coolDown = 10;
 
     public GameObject ui;
-
+    public AudioClip ballHitWallnoise;
+    public AudioClip kickNoise;
+    private AudioSource soundPlayer;
+    public bool soundisplaying;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +63,7 @@ public class PlayerBallSliding : MonoBehaviour
         ballSprite= GetComponent<SpriteRenderer>();
         transform.position = new Vector3(0.0f, -2.0f, 0.0f);
         trailRenderer.enabled = true;
+        soundPlayer = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -194,6 +198,9 @@ public class PlayerBallSliding : MonoBehaviour
     public void TakeDamage()
     {
         Debug.Log(ui.GetComponent<GameUI>().health);
+        soundPlayer.clip = kickNoise;
+        if(!soundPlayer.isPlaying)
+            soundPlayer.Play();
         if (!isDashing) {
             /*positionWhenHit = transform.position;*/
             isControlsEnabled = false;
@@ -272,8 +279,17 @@ public class PlayerBallSliding : MonoBehaviour
         isHit = false;
         isControlsEnabled = true;
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("wall")){
+            soundPlayer.clip = ballHitWallnoise;
+            if (!soundPlayer.isPlaying)
+                soundPlayer.Play();
+        }
     
-    
+    }
+
+
 }
 
 

@@ -27,6 +27,8 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     public GameObject ui;
     public int health = 1;
     public AudioClip[] deathSounds;
+   
+
     private AudioSource audioplayer;
     public bool PlayDeathSound;
 
