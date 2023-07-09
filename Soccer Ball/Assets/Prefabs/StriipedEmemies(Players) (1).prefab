@@ -15,9 +15,8 @@ GameObject:
   - component: {fileID: 8793625736557620833}
   - component: {fileID: 5722056419765550368}
   - component: {fileID: 6659746540366143594}
-  - component: {fileID: 5923284274574014437}
   - component: {fileID: 8316608559592189834}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StriipedEmemies(Players) (1)
   m_TagString: Enemies
   m_Icon: {fileID: 0}
@@ -259,28 +258,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &5923284274574014437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2617490507135414349}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879243b209ff18841a103076f390a13f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyBrain: {fileID: 11400000, guid: 419735a8b8933054dbbfcd6326c9028a, type: 2}
-  enemyAi: {fileID: 0}
-  DeathSounds: []
-  canAttack: 0
-  agressive: 0
-  directionToPlayer: {x: 0, y: 0}
-  health: 0
-  vunrable: 0
 --- !u!82 &8316608559592189834
 AudioSource:
   m_ObjectHideFlags: 0
