@@ -86,15 +86,6 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         //Debug.Log("im Hit!!!");
         vunrable = 3;
         rb.constraints = RigidbodyConstraints2D.None;
-        health--;
-        if(health < 0 && PlayDeathSound)
-        {
-            PlayDeathSound= false;
-            int number = Random.Range(0, deathSounds.Length);
-            AudioClip deathsound = deathSounds[number];
-            audioplayer.clip= deathsound;
-            audioplayer.Play();
-        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -112,7 +103,16 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         }
         if (collision.gameObject.CompareTag("wall") && vunrable > 0)
         {
-            Destroy(gameObject);
+            health--;
+            if (health < 0 && PlayDeathSound)
+            {
+                PlayDeathSound = false;
+                int number = Random.Range(0, deathSounds.Length);
+                AudioClip deathsound = deathSounds[number];
+                audioplayer.clip = deathsound;
+                audioplayer.Play();
+                Destroy(gameObject);
+            }
         }
     }
     public void OnTriggerStay2D(Collider2D collision)
