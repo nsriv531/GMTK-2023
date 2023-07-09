@@ -36,8 +36,9 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     // Update is called once per frame
     void Update()
     {
-        /*if (vunrable <= 0) {*/
-        distance = Vector2.Distance(transform.position, ball.transform.position);
+        if (vunrable <= 0)
+        {
+            distance = Vector2.Distance(transform.position, ball.transform.position);
         Vector2 direction = ball.transform.position - transform.position;
         rb.velocity = direction.normalized * speed;
 
@@ -45,25 +46,26 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
 
         // Debug.Log(angle);
 
-        /*if (vunrable > 0) {
+        if (vunrable > 0)
+        {
             vunrable -= Time.deltaTime;
-        }*/
+        }
 
         anime.SetBool("Up", (angle >= 45 && angle <= 135));
         anime.SetBool("Down", (angle <= -45 && angle >= -135));
         anime.SetBool("Left", (angle >= 135 || angle <= -135));
         anime.SetBool("Right", (angle <= 45 && angle >= -45));
         anime.SetBool("Kick", kick);
-        /*}*/
+        }
     }
 
     public void TakeDamage()
     {
         ///takes damge
         ui.GetComponent<GameUI>().score++;
-            Destroy(gameObject);
-            //Debug.Log("im Hit!!!");
-            /*vunrable = 3;*/
+        /*Destroy(gameObject);*/
+        //Debug.Log("im Hit!!!");
+        vunrable = 3;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -78,10 +80,10 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
             ball.GetComponent<PlayerBallSliding>().TakeDamage();
             ball.GetComponent<Rigidbody2D>().velocity = ball.GetComponent<Transform>().position - gameObject.transform.position * speed * 3;
         }
-        /*if (collision.gameObject.CompareTag("wall") && vunrable > 0)
+        if (collision.gameObject.CompareTag("wall") && vunrable > 0)
         {
             Destroy(gameObject);
-        }*/
+        }
     }
     public void OnTriggerStay2D(Collider2D collision)
     {

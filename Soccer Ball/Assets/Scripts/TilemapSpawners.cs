@@ -27,7 +27,7 @@ public class TilemapSpawners : MonoBehaviour
         {
             int spawnType = Random.Range(1, 1000);
             Vector3 spawnPos = Random.insideUnitCircle * 22;
-            Debug.Log("Spawn Attempt" + spawnType + ", " + spawnPos);
+            /*Debug.Log("Spawn Attempt" + spawnType + ", " + spawnPos);*/
             if ((spawnType % enemySpawnrate) == 0)
             {
                 Instantiate(healthPickUp1, spawnPos, Quaternion.identity);

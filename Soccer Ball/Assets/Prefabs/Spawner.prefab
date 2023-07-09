@@ -48,7 +48,7 @@ MonoBehaviour:
   map: {fileID: 0}
   healthSpawnrate: 50
   enemySpawnrate: 30
-  healthPickUp1: {fileID: 0}
+  healthPickUp1: {fileID: 8687003867141442107, guid: ea14f531065c80340af30d269e89c504, type: 3}
   enemies: {fileID: 8748277239648190879, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
   timer: 0
   spawnTick: 0.1
