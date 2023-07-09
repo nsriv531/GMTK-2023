@@ -9,7 +9,6 @@ public class EnemyBrain : MonoBehaviour
     void Start()
     {
         enemyData.pursures = 0;
-        enemyData.MaxPursuers = 2;
     }
 
     // Update is called once per frame

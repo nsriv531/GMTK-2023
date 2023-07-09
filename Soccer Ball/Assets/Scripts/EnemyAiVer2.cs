@@ -26,9 +26,16 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     bool isgetingDirection;
     bool pursue;
     bool isAlive;
+     float avoidradius = 4f;
+    public GameObject ui;
 
-   public Vector2 directionToPlayer;
+    public Vector2 directionToPlayer;
 
+    public AudioClip[] deathSounds;
+
+
+    private AudioSource audioplayer;
+    public bool PlayDeathSound;
 
 
     #endregion
@@ -47,6 +54,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         enemyAi = this;
         spriteRenderer= GetComponent<SpriteRenderer>();
         isgetingDirection = true;
+        ui = GameObject.FindGameObjectWithTag("GameController");
 
     }
 
@@ -58,6 +66,16 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         {
             directionToPlayer = player.transform.position - transform.position ;
             directionToPlayer.Normalize();
+
+            Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, avoidradius,7);
+            foreach (Collider2D enemy in nearbyEnemies)
+            {
+                if (enemy != gameObject) // Ignore self
+                {
+                    Vector2 avoidanceDirection = transform.position - enemy.transform.position;
+                    directionToPlayer += avoidanceDirection.normalized;
+                }
+            }
 
         }
 
@@ -121,7 +139,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     }
     public void Defend()
     {
-        if(Vector2.Distance(transform.position, player.transform.position) < 9 && ! canAttack)
+        if(Vector2.Distance(transform.position, player.transform.position) < 6 && ! canAttack)
         {
             AttackTimer();
         }
@@ -129,6 +147,10 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         {
             animator.SetBool("Kick", true);
 
+        }
+        else
+        {
+            DisableAttackAnimation();
         }
     }
     public void MoveToTarget(int speed, Vector2 direction)
@@ -211,7 +233,24 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
 
     public void TakeDamage()
     {
-        
+        ///takes damge
+        ui.GetComponent<GameUI>().score++;
+        /*Destroy(gameObject);*/
+        //Debug.Log("im Hit!!!");
+        vunrable = 3;
+       // rb2d.constraints = RigidbodyConstraints2D.None;
+        health--;
+        if (health < 0 )
+        {
+            int number = Random.Range(0, deathSounds.Length);
+            AudioClip deathsound = deathSounds[number];
+            if(!audioplayer.isPlaying)
+            {
+                audioplayer.clip = deathsound;
+                audioplayer.Play();
+
+            }
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

@@ -52,9 +52,11 @@ MonoBehaviour:
   enemies:
   - {fileID: 8748277239648190879, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
   - {fileID: 2617490507135414349, guid: bf204be37c8c3894c9a83e05d83cc4b4, type: 3}
+  - {fileID: 4732688909656077599, guid: d7ea76dcd8561864c8ab420c20fb29c2, type: 3}
   timer: 0
   spawnTick: 0.1
   pos: {fileID: 7387520311340119730}
+  maxSpawn: 5
 --- !u!58 &-7215724482453887990
 CircleCollider2D:
   m_ObjectHideFlags: 0
