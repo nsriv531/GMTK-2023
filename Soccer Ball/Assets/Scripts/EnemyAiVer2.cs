@@ -10,19 +10,20 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     public EnemyData enemyBrain;
     [SerializeField]
     private EnemyAiVer2 enemyAi;
+    private SpriteRenderer spriteRenderer;
 
     [SerializeField]
     public AudioClip[] DeathSounds;
     #region attacking
     public bool canAttack;
-    float timeUntileAttack = 1.5f;
+    float timeUntileAttack = 1f;
     float attackTimer;
 
     public bool agressive;
     float timeUntileAgrresive = 2;
     float aggresivetimer;
 
-
+    bool isgetingDirection;
     bool pursue;
     bool isAlive;
 
@@ -43,14 +44,23 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         animator= GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         enemyAi = this;
+        spriteRenderer= GetComponent<SpriteRenderer>();
+        isgetingDirection = true;
 
     }
 
     private void Update()
     {
             enemyBrain.CheckiFCanPersue(enemyAi);
-        directionToPlayer = player.transform.position - transform.position ;
-        directionToPlayer.Normalize();
+     
+        if(isgetingDirection)
+        {
+            directionToPlayer = player.transform.position - transform.position ;
+            directionToPlayer.Normalize();
+
+        }
+
+        
 
         if(pursue)
         {
@@ -88,9 +98,9 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         {
             if( !canAttack)
             {
-                if (Vector2.Distance(transform.position, player.transform.position) > 8)
+                if (Vector2.Distance(transform.position, player.transform.position) > 5)
                 {
-                    MoveToTarget(7, directionToPlayer);
+                    MoveToTarget(10, directionToPlayer);
                     AttackTimer();
 
                 }
@@ -104,7 +114,6 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
             }
             else if (canAttack)
             {
-                rb2d.velocity = Vector2.zero;
                 animator.SetBool("Kick", true);
             }
         }
@@ -120,7 +129,14 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         animator.SetBool("Up", (angle >= 45 && angle <= 135));
         animator.SetBool("Down", (angle <= -45 && angle >= -135));
         animator.SetBool("Left", (angle >= 135 || angle <= -135));
-
+        if(angle >= 135 || angle <= -135)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
         animator.SetBool("Right", (angle <= 45 && angle >= -45));
         //animator.SetBool("Kick", kick);
         rb2d.velocity = direction * speed;
@@ -144,6 +160,14 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         {
             canAttack= true;
         }
+        if(attackTimer < 0.6f)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        if(attackTimer < 0.5f)
+        {
+            isgetingDirection= false;
+        }
 
     }
   
@@ -154,14 +178,17 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         attackTimer = timeUntileAttack;
         aggresivetimer = timeUntileAttack;
         animator.SetBool("Kick", false);
+        spriteRenderer.color = Color.white;
+        isgetingDirection = true;
+
     }
     public void AddforceToDirection()
     {
-        rb2d.AddForce(directionToPlayer * 1, ForceMode2D.Impulse);
+        rb2d.velocity = directionToPlayer * 50;
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject == player)
+        if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("kicked");
             player.GetComponent<PlayerBallSliding>().TakeDamage();
