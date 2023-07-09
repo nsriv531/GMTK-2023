@@ -21,7 +21,7 @@ public class AdvanceLevelLower : MonoBehaviour
     {
         /*Instantiate(enemies, new Vector3(40, -11, 0), new Quaternion(0, 0, 0, 0));
 */
-        if (spawnRate > spawnTimer)
+        /*if (spawnRate > spawnTimer)
         {
             spawnTimer += Time.deltaTime;
         }
@@ -29,7 +29,7 @@ public class AdvanceLevelLower : MonoBehaviour
         {
             spawnTimer = 0;
             Instantiate(enemies, placement.position, Quaternion.identity);
-        }
+        }*/
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {

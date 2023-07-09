@@ -197,7 +197,9 @@ public class PlayerBallSliding : MonoBehaviour
         if (!isDashing) {
             /*positionWhenHit = transform.position;*/
             isControlsEnabled = false;
-            controllCoolDown = coolDown;
+            if (controllCoolDown <= 0) {
+                controllCoolDown = coolDown;
+            }
             ui.GetComponent<GameUI>().health--;
         }
         /*if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
