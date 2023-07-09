@@ -25,12 +25,21 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     public float vunrable = 0;
 
     public GameObject ui;
+    public int health = 1;
+    public AudioClip[] deathSounds;
+   
+
+    private AudioSource audioplayer;
+    public bool PlayDeathSound;
+
     // Start is called before the first frame update
     void Start()
     {
         ball = GameObject.FindGameObjectWithTag("Player");
         ballColider = GameObject.FindGameObjectWithTag("PlayerColider");
         ui = GameObject.FindGameObjectWithTag("GameController");
+        PlayDeathSound = true;
+        audioplayer = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,6 +75,15 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         /*Destroy(gameObject);*/
         //Debug.Log("im Hit!!!");
         vunrable = 3;
+        health--;
+        if(health < 0 && PlayDeathSound)
+        {
+            PlayDeathSound= false;
+            int number = Random.Range(0, deathSounds.Length);
+            AudioClip deathsound = deathSounds[number];
+            audioplayer.clip= deathsound;
+            audioplayer.Play();
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -103,5 +121,9 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         {
             kick = false;
         }
+    }
+    public IEnumerator DeathAnimation()
+    {
+        yield return new WaitForSeconds(1f);
     }
 }

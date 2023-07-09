@@ -8,6 +8,7 @@ TagManager:
   - ScoreDisplay
   - HealthBar
   - PlayerColider
+  - Enemies
   layers:
   - Default
   - TransparentFX

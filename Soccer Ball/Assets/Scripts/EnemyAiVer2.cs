@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAiVer2 : MonoBehaviour
+public class EnemyAiVer2 : MonoBehaviour,IDamagable
 {
     private Rigidbody2D rb2d;
     private GameObject player;
@@ -10,6 +10,9 @@ public class EnemyAiVer2 : MonoBehaviour
     public EnemyData enemyBrain;
     [SerializeField]
     private EnemyAiVer2 enemyAi;
+
+    [SerializeField]
+    public AudioClip[] DeathSounds;
     #region attacking
     public bool canAttack;
     float timeUntileAttack = 1.5f;
@@ -23,7 +26,7 @@ public class EnemyAiVer2 : MonoBehaviour
     bool pursue;
     bool isAlive;
 
-    Vector2 directionToPlayer;
+   public Vector2 directionToPlayer;
 
 
 
@@ -154,7 +157,7 @@ public class EnemyAiVer2 : MonoBehaviour
     }
     public void AddforceToDirection()
     {
-        rb2d.AddForce(directionToPlayer * 1, ForceMode2D.Force);
+        rb2d.AddForce(directionToPlayer * 1, ForceMode2D.Impulse);
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
@@ -168,5 +171,30 @@ public class EnemyAiVer2 : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void TakeDamage()
+    {
+        
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+    }
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+    }
+
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
     }
 }
