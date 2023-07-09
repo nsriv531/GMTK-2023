@@ -14,6 +14,7 @@ public class TilemapSpawners : MonoBehaviour
     public GameObject enemies;
     public float timer = 0;
     public float spawnTick = 1;
+    public Transform pos;
 
     void Start()
     {
@@ -26,7 +27,9 @@ public class TilemapSpawners : MonoBehaviour
         if (timer <= 0)
         {
             int spawnType = Random.Range(1, 1000);
-            Vector3 spawnPos = Random.insideUnitCircle * 22;
+            Vector3 oldPos = pos.position;
+            Vector3 spawnPos = (Random.insideUnitCircle * 12);
+            spawnPos = oldPos + spawnPos;
             /*Debug.Log("Spawn Attempt" + spawnType + ", " + spawnPos);*/
             if (healthSpawnrate >= spawnType)
             {

@@ -46,12 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 0}
-  healthSpawnrate: 5
+  healthSpawnrate: 1
   enemySpawnrate: 20
   healthPickUp1: {fileID: 8687003867141442107, guid: ea14f531065c80340af30d269e89c504, type: 3}
   enemies: {fileID: 8748277239648190879, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
   timer: 0
   spawnTick: 0.1
+  pos: {fileID: 7387520311340119730}
 --- !u!58 &-7215724482453887990
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -86,4 +87,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 22.23
+  m_Radius: 12
