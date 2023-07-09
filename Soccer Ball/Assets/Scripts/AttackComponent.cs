@@ -8,6 +8,8 @@ public class AttackComponent : MonoBehaviour
 
     private IDamagable enemyHitData;
 
+    public AudioSource audioPlayer;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GetEnemy(collision);
@@ -54,5 +56,11 @@ public class AttackComponent : MonoBehaviour
         }
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "wall")
+        {
+            audioPlayer.Play();
+        }
+    }
 }
