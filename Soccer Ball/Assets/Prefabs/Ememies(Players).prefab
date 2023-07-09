@@ -209,7 +209,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8748277239648190879}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6a5ad70ed15d3c4c9c164d605e56008, type: 3}
   m_Name: 
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8748277239648190879}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 879243b209ff18841a103076f390a13f, type: 3}
   m_Name: 
@@ -279,6 +279,7 @@ MonoBehaviour:
   canAttack: 0
   agressive: 0
   directionToPlayer: {x: 0, y: 0}
+  health: 0
   vunrable: 0
 --- !u!82 &8555906302563546595
 AudioSource:

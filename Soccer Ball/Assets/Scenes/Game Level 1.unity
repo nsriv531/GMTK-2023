@@ -912,6 +912,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2560358628972762044, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
+      propertyPath: enemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560358628972762044, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 8748277239648190879, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
+    - target: {fileID: 2560358628972762044, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 2617490507135414349, guid: bf204be37c8c3894c9a83e05d83cc4b4, type: 3}
     - target: {fileID: 7387520311340119730, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -49448,6 +49460,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ememies(Players)
       objectReference: {fileID: 0}
+    - target: {fileID: 8748277239648190879, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -49659,7 +49675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8192419352840779046, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

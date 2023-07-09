@@ -209,7 +209,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2617490507135414349}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6a5ad70ed15d3c4c9c164d605e56008, type: 3}
   m_Name: 
@@ -232,6 +232,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6aa51182f4f764f4497e5861d93337aa, type: 3}
   - {fileID: 8300000, guid: 68ed5232390d3c14592beb4fbbb64ad5, type: 3}
   PlayDeathSound: 0
+  kickCoolDown: 0
+  kickCooltime: 5
 --- !u!50 &6659746540366143594
 Rigidbody2D:
   serializedVersion: 4
@@ -266,7 +268,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2617490507135414349}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 879243b209ff18841a103076f390a13f, type: 3}
   m_Name: 
@@ -277,6 +279,7 @@ MonoBehaviour:
   canAttack: 0
   agressive: 0
   directionToPlayer: {x: 0, y: 0}
+  health: 0
   vunrable: 0
 --- !u!82 &8316608559592189834
 AudioSource:
