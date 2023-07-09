@@ -218,7 +218,7 @@ MonoBehaviour:
   bC2: {fileID: 2616764093916926528}
   xv: 0
   yv: 0
-  speed: 4
+  speed: 1
   ball: {fileID: 0}
   ballColider: {fileID: 0}
   anime: {fileID: 1072221639858626598}
@@ -258,7 +258,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!82 &4441589747262439417
 AudioSource:
