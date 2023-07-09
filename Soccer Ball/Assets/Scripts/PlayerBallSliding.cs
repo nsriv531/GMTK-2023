@@ -45,6 +45,8 @@ public class PlayerBallSliding : MonoBehaviour
     public float controllCoolDown = 0;
     public float coolDown = 10;
 
+    public GameObject ui;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -191,10 +193,12 @@ public class PlayerBallSliding : MonoBehaviour
 
     public void TakeDamage()
     {
+        Debug.Log(ui.GetComponent<GameUI>().health);
         if (!isDashing) {
             /*positionWhenHit = transform.position;*/
             isControlsEnabled = false;
             controllCoolDown = coolDown;
+            ui.GetComponent<GameUI>().health--;
         }
         /*if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
         {

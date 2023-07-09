@@ -17,15 +17,20 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     public float speed;
 
     public GameObject ball;
+    public GameObject ballColider;
     private float distance;
     public Animator anime;
     public bool kick = false;
 
     public float vunrable = 0;
+
+    public GameObject ui;
     // Start is called before the first frame update
     void Start()
     {
         ball = GameObject.FindGameObjectWithTag("Player");
+        ballColider = GameObject.FindGameObjectWithTag("PlayerColider");
+        ui = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -54,8 +59,8 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
 
     public void TakeDamage()
     {
-            ///takes damge
-
+        ///takes damge
+        ui.GetComponent<GameUI>().score++;
             Destroy(gameObject);
             //Debug.Log("im Hit!!!");
             /*vunrable = 3;*/
@@ -70,8 +75,7 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         if (collision.gameObject == ball) {
             Debug.Log("kicked");
             kick = true;
-            IDamagable target = collision.gameObject.GetComponent<IDamagable>();
-            target.TakeDamage();
+            ballColider.GetComponent<PlayerBallSliding>().TakeDamage();
             ball.GetComponent<Rigidbody2D>().velocity = ball.GetComponent<Transform>().position + gameObject.transform.position * 10;
         }
         /*if (collision.gameObject.CompareTag("wall") && vunrable > 0)
