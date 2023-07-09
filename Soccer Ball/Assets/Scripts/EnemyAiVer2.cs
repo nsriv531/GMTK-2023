@@ -85,7 +85,7 @@ public class EnemyAiVer2 : MonoBehaviour
         {
             if( !canAttack)
             {
-                if (Vector2.Distance(transform.position, player.transform.position) > 6)
+                if (Vector2.Distance(transform.position, player.transform.position) > 8)
                 {
                     MoveToTarget(7, directionToPlayer);
                     AttackTimer();

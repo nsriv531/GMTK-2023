@@ -21,7 +21,7 @@ public class HealthItem1 : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision == ball)
+        if (collision.CompareTag("Player"))
         {
             Debug.Log("hit ball");
             ui.GetComponent<GameUI>().health += 10;
