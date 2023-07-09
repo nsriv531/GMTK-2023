@@ -25,6 +25,9 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
         time += Time.deltaTime;
         scoreBar.GetComponent<TextMeshProUGUI>().text = "Score " + score.ToString();
         healthBar.GetComponent<TextMeshProUGUI>().text = "Health " + health.ToString() + "/" + maxHealth.ToString();

@@ -32,6 +32,9 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     private AudioSource audioplayer;
     public bool PlayDeathSound;
 
+    public float kickCoolDown;
+    public float kickCooltime = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,27 +48,34 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     // Update is called once per frame
     void Update()
     {
+            Vector2 direction = ball.transform.position - transform.position;
         if (vunrable <= 0)
         {
             distance = Vector2.Distance(transform.position, ball.transform.position);
-        Vector2 direction = ball.transform.position - transform.position;
-        rb.velocity = direction.normalized * speed;
+            rb.velocity = direction.normalized * speed;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Debug.Log(angle);
-         
-        if (vunrable > 0)
-        {
-            vunrable -= Time.deltaTime;
         }
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            // Debug.Log(angle);
 
+            if (vunrable > 0)
+            {
+                vunrable -= Time.deltaTime;
+            }
+            else {
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                rb.rotation = 0;
+            }
+            if (kickCoolDown > 0)
+            {
+                kickCoolDown -= Time.deltaTime;
+            }
         anime.SetBool("Up", (angle >= 45 && angle <= 135));
         anime.SetBool("Down", (angle <= -45 && angle >= -135));
         anime.SetBool("Left", (angle >= 135 || angle <= -135));
         anime.SetBool("Right", (angle <= 45 && angle >= -45));
         anime.SetBool("Kick", kick);
-        }
+        
     }
 
     public void TakeDamage()
@@ -75,6 +85,7 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         /*Destroy(gameObject);*/
         //Debug.Log("im Hit!!!");
         vunrable = 3;
+        rb.constraints = RigidbodyConstraints2D.None;
         health--;
         if(health < 0 && PlayDeathSound)
         {
@@ -92,11 +103,12 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject == ball) {
+        if (collision.gameObject == ball && kickCoolDown == 0) {
             Debug.Log("kicked");
             kick = true;
             ball.GetComponent<PlayerBallSliding>().TakeDamage();
             ball.GetComponent<Rigidbody2D>().velocity = ball.GetComponent<Transform>().position - gameObject.transform.position * speed * 3;
+            kickCoolDown = kickCooltime;
         }
         if (collision.gameObject.CompareTag("wall") && vunrable > 0)
         {

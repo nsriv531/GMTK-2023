@@ -231,9 +231,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 434176fa0c78a5646ad131fda5d1c5f7, type: 3}
   - {fileID: 8300000, guid: 6aa51182f4f764f4497e5861d93337aa, type: 3}
   - {fileID: 8300000, guid: 68ed5232390d3c14592beb4fbbb64ad5, type: 3}
-  ballHitWallnoise: {fileID: 8300000, guid: b0fa18d6526d20a47a82fedd688e4d0c, type: 3}
-  kickNoise: {fileID: 8300000, guid: 6bd291c53a4b39f4e925d692564227a2, type: 3}
   PlayDeathSound: 0
+  kickCoolDown: 0
+  kickCooltime: 5
 --- !u!50 &2012772955668941382
 Rigidbody2D:
   serializedVersion: 4
