@@ -49400,10 +49400,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4556879408512091466, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
-      propertyPath: PlayDeathSound
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7543819859926810178, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
       propertyPath: m_RootOrder
       value: 6
