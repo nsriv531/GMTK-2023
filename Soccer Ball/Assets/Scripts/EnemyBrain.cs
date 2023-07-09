@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu]
-public class EnemyBrain : ScriptableObject
-{
-    public List<EnemyAiVer2> CurrentlyPursuingPlayer;
-    public int MaxPursuers;
 
-    public void CheckiFCanPersue(EnemyAiVer2 ai)
+public class EnemyBrain : MonoBehaviour
+{
+    public EnemyData enemyData; 
+    // Start is called before the first frame update
+    void Start()
     {
-        if(CurrentlyPursuingPlayer.Count <MaxPursuers)
-        {
-            CurrentlyPursuingPlayer.Add(ai);
-        }
+        enemyData.pursures = 0;
+        enemyData.MaxPursuers = 1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

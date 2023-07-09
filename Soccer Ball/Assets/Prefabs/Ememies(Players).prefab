@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 494191189590832643}
   - component: {fileID: 4556879408512091466}
   - component: {fileID: 2012772955668941382}
+  - component: {fileID: 2021614365512954977}
   m_Layer: 0
   m_Name: Ememies(Players)
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5022890327659202391
 SpriteRenderer:
@@ -184,7 +185,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.01618588, y: -0.021581292}
@@ -219,8 +220,11 @@ MonoBehaviour:
   yv: 0
   speed: 1
   ball: {fileID: 0}
+  ballColider: {fileID: 0}
   anime: {fileID: 8641007776922254263}
   kick: 0
+  vunrable: 0
+  ui: {fileID: 0}
 --- !u!50 &2012772955668941382
 Rigidbody2D:
   serializedVersion: 4
@@ -248,3 +252,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2021614365512954977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748277239648190879}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879243b209ff18841a103076f390a13f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyBrain: {fileID: 11400000, guid: 419735a8b8933054dbbfcd6326c9028a, type: 2}
+  enemyAi: {fileID: 0}
+  canAttack: 0
+  agressive: 0
+  vunrable: 0
