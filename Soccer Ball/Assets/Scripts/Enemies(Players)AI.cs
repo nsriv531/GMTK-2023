@@ -104,7 +104,7 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         if (collision.gameObject.CompareTag("wall") && vunrable > 0)
         {
             health--;
-            if (health < 0 && PlayDeathSound)
+            if (health <= 0 && PlayDeathSound)
             {
                 PlayDeathSound = false;
                 int number = Random.Range(0, deathSounds.Length);

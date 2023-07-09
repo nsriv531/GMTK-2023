@@ -36,7 +36,7 @@ public class TilemapSpawners : MonoBehaviour
             Vector3 spawnPos = (Random.insideUnitCircle * 12);
             spawnPos = oldPos + spawnPos;
             /*Debug.Log("Spawn Attempt" + spawnType + ", " + spawnPos);*/
-            if (healthSpawnrate >= spawnType)
+            if (healthSpawnrate >= spawnType && timerRefrance.GetComponent<GameUI>().health < timerRefrance.GetComponent<GameUI>().maxHealth)
             {
                 Instantiate(healthPickUp1, spawnPos, Quaternion.identity);
             }
@@ -51,6 +51,11 @@ public class TilemapSpawners : MonoBehaviour
                 if (timerRefrance.time > 10)
                 {
                     Instantiate(enemies[1], spawnPos, Quaternion.identity);
+
+                }
+                if (timerRefrance.time > 20)
+                {
+                    Instantiate(enemies[2], spawnPos, Quaternion.identity);
 
                 }
             }

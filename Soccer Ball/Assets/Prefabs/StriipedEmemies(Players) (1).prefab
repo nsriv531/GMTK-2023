@@ -218,14 +218,14 @@ MonoBehaviour:
   bC2: {fileID: 8793625736557620833}
   xv: 0
   yv: 0
-  speed: 1
+  speed: 3
   ball: {fileID: 0}
   ballColider: {fileID: 0}
   anime: {fileID: 6416774327592072611}
   kick: 0
   vunrable: 0
   ui: {fileID: 0}
-  health: 1
+  health: 2
   deathSounds:
   - {fileID: 8300000, guid: 434176fa0c78a5646ad131fda5d1c5f7, type: 3}
   - {fileID: 8300000, guid: 6aa51182f4f764f4497e5861d93337aa, type: 3}

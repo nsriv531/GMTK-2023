@@ -218,7 +218,7 @@ MonoBehaviour:
   bC2: {fileID: 494191189590832643}
   xv: 0
   yv: 0
-  speed: 1
+  speed: 2
   ball: {fileID: 0}
   ballColider: {fileID: 0}
   anime: {fileID: 8641007776922254263}
