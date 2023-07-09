@@ -725,7 +725,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7387520311340119730, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7387520311340119730, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1008,7 +1008,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1080886993
 GameObject:
@@ -49206,7 +49206,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7387520311340119730, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7387520311340119730, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_LocalPosition.x
@@ -49589,30 +49589,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
-<<<<<<< HEAD
---- !u!1 &1312677649 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8748277239648190879, guid: 851d62cdf44256d479123f2d7de41e8d, type: 3}
-  m_PrefabInstance: {fileID: 1236200440}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1312677657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312677649}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879243b209ff18841a103076f390a13f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyBrain: {fileID: 11400000, guid: 419735a8b8933054dbbfcd6326c9028a, type: 2}
-  enemyAi: {fileID: 0}
-  canAttack: 0
-  agressive: 0
-  vunrable: 0
-=======
 --- !u!1001 &1277908749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49690,7 +49666,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
->>>>>>> 2d45368fb16988eee9993d997a59333746763f37
 --- !u!1 &1408297048
 GameObject:
   m_ObjectHideFlags: 0
@@ -49960,8 +49935,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   score: 0
+  time: 0
   scoreBar: {fileID: 1235522444}
   healthBar: {fileID: 248768058}
+  timer: {fileID: 2035111735}
 --- !u!1001 &1708313008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49972,7 +49949,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7387520311340119730, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7387520311340119730, guid: d57edcf07dd744246afac99a7e3c3138, type: 3}
       propertyPath: m_LocalPosition.x
@@ -50112,7 +50089,7 @@ GameObject:
   - component: {fileID: 2035111738}
   - component: {fileID: 2035111737}
   m_Layer: 5
-  m_Name: Score Bar (1)
+  m_Name: Timer
   m_TagString: ScoreDisplay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50261,7 +50238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7363556837649313159, guid: ea14f531065c80340af30d269e89c504, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7363556837649313159, guid: ea14f531065c80340af30d269e89c504, type: 3}
       propertyPath: m_LocalPosition.x
