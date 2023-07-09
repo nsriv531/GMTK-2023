@@ -77,7 +77,7 @@ public class PlayerBalls : MonoBehaviour
         }
 
 
-        rb.velocity = new Vector2(xv, yv) * dashing;
+        /*rb.velocity = new Vector2(xv, yv) * dashing;*/
 
         if (!canFire)
         {

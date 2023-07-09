@@ -33,7 +33,7 @@ public class AdvanceLevelUpper : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        /*Debug.Log(SceneManager.GetActiveScene().buildIndex);*/
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex + 1);
     }

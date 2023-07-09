@@ -42,6 +42,9 @@ public class PlayerBallSliding : MonoBehaviour
     private AnimationCurve curve;
     #endregion
 
+    public float controllCoolDown = 0;
+    public float coolDown = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +62,7 @@ public class PlayerBallSliding : MonoBehaviour
 
     private void Update()
     {
-        if(isControlsEnabled)
+        if (isControlsEnabled)
         {
             CheckIfShouldFlip((int)rawMovemntDirection.x);
             CalculateMovementDirection();
@@ -72,11 +75,17 @@ public class PlayerBallSliding : MonoBehaviour
                 }
 
             }
-            if(Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 TakeDamage();
             }
 
+        }
+        else {
+            controllCoolDown -= Time.deltaTime;
+            if (controllCoolDown <= 0) {
+                isControlsEnabled = true;
+            }
         }
 
 
@@ -182,9 +191,12 @@ public class PlayerBallSliding : MonoBehaviour
 
     public void TakeDamage()
     {
-        positionWhenHit = transform.position;
-        isControlsEnabled = false;
-        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+        if (!isDashing) {
+            /*positionWhenHit = transform.position;*/
+            isControlsEnabled = false;
+            controllCoolDown = coolDown;
+        }
+        /*if(SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
         {
             if(!isHit)
             {
@@ -198,7 +210,7 @@ public class PlayerBallSliding : MonoBehaviour
             if(isHit)
                  StartCoroutine(OnHitMovement(previouseStageEntrance));
 
-        }
+        }*/
 
     }
     private void DashActivated()
