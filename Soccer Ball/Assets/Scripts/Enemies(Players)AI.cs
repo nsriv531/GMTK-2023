@@ -10,7 +10,7 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
 
     public BoxCollider2D bC1;
     public BoxCollider2D bC2;
-
+    private SpriteRenderer spriteRenderer;
     public float xv;
     public float yv;
 
@@ -42,6 +42,7 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         ballColider = GameObject.FindGameObjectWithTag("PlayerColider");
         ui = GameObject.FindGameObjectWithTag("GameController");
         PlayDeathSound = true;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         audioplayer = GetComponent<AudioSource>();
     }
 
@@ -73,6 +74,14 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         anime.SetBool("Up", (angle >= 45 && angle <= 135));
         anime.SetBool("Down", (angle <= -45 && angle >= -135));
         anime.SetBool("Left", (angle >= 135 || angle <= -135));
+        if((angle >= 135 || angle <= -135))
+        {
+            spriteRenderer.flipX= true;
+        }
+        else
+        {
+            spriteRenderer.flipX= false;
+        }
         anime.SetBool("Right", (angle <= 45 && angle >= -45));
         anime.SetBool("Kick", kick);
         
