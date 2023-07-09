@@ -32,6 +32,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
 
 
     #endregion
+    public int health;
     public float vunrable = 0;
 
     private void Start()
@@ -68,7 +69,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         }
         else
         {
-
+            Defend();
         }
     }
     private void FixedUpdate()
@@ -120,7 +121,15 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     }
     public void Defend()
     {
+        if(Vector2.Distance(transform.position, player.transform.position) < 9 && ! canAttack)
+        {
+            AttackTimer();
+        }
+        else if(canAttack)
+        {
+            animator.SetBool("Kick", true);
 
+        }
     }
     public void MoveToTarget(int speed, Vector2 direction)
     {
@@ -223,5 +232,17 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
 
     public void OnCollisionExit2D(Collision2D collision)
     {
+    }
+    public void Death()
+    {
+        if (pursue)
+        {
+            enemyBrain.pursures--;
+
+        }
+    }
+    public bool GetPursue()
+    {
+        return pursue;
     }
 }

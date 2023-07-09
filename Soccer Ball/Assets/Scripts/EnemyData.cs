@@ -9,10 +9,14 @@ public class EnemyData : ScriptableObject
 
     public void CheckiFCanPersue(EnemyAiVer2 ai)
     {
-        if(pursures <MaxPursuers)
+        if(pursures <MaxPursuers && !ai.GetPursue())
         {
             pursures++;
             ai.EnablePursue();
         }
+    }
+    public void EnemyDead()
+    {
+        pursures--;
     }
 }
