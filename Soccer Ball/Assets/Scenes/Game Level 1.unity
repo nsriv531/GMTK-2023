@@ -49684,6 +49684,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1536052423}
     - target: {fileID: 8951835913929999625, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1536052423}
+    - target: {fileID: 8951835913929999625, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
+      propertyPath: coolDown
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8951835913929999625, guid: ad44e771fff5cf24cb9acc030d541b3c, type: 3}
       propertyPath: netPosition
       value: 
       objectReference: {fileID: 1262684036}

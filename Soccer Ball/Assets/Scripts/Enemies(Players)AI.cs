@@ -75,8 +75,8 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         if (collision.gameObject == ball) {
             Debug.Log("kicked");
             kick = true;
-            ballColider.GetComponent<PlayerBallSliding>().TakeDamage();
-            ball.GetComponent<Rigidbody2D>().velocity = ball.GetComponent<Transform>().position + gameObject.transform.position * 10;
+            ball.GetComponent<PlayerBallSliding>().TakeDamage();
+            ball.GetComponent<Rigidbody2D>().velocity = ball.GetComponent<Transform>().position - gameObject.transform.position * speed * 3;
         }
         /*if (collision.gameObject.CompareTag("wall") && vunrable > 0)
         {
