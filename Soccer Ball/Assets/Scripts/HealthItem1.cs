@@ -25,7 +25,6 @@ public class HealthItem1 : MonoBehaviour
         {
             Debug.Log("hit ball");
             ui.GetComponent<GameUI>().health += 10;
-            ball.GetComponent<PlayerBallSliding>().controllCoolDown = 0;
             Destroy(gameObject);
         }
     }

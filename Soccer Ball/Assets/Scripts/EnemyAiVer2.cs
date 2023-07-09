@@ -229,7 +229,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("kicked");
-            player.GetComponent<PlayerBallSliding>().TakeDamage();
+            player.GetComponent<PlayerBallSliding>().TakeDamage(5);
             player.GetComponent<Rigidbody2D>().velocity = player.GetComponent<Transform>().position - gameObject.transform.position * 1.5f * 3;
         }
         if (collision.gameObject.CompareTag("wall") && vunrable > 0)
@@ -238,7 +238,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         }
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int meter)
     {
        
         health--;
@@ -255,25 +255,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-    }
-
-    public void OnTriggerStay2D(Collider2D collision)
-    {
-    }
-
-    public void OnCollisionStay2D(Collision2D collision)
-    {
-    }
-
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-    }
-
-    public void OnCollisionExit2D(Collision2D collision)
-    {
-    }
+  
     public void GetDirection(Transform target)
     {
         directionToPlayer = target.transform.position - transform.position;

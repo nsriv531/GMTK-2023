@@ -50,7 +50,7 @@ public class AttackComponent : MonoBehaviour
     {
         if(enemyHitData != null)
         {
-            enemyHitData.TakeDamage();
+            enemyHitData.TakeDamage(5);
             enemyHitData = null;
 
         }

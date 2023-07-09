@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dummyscript : MonoBehaviour,IDamagable
+public class dummyscript : MonoBehaviour
 {
     public int health;
  
 
-    public void TakeDamage()
-    {
-       Health();
-    }
+    
 
    
     public void PlayDeath()
