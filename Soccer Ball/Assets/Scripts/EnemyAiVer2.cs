@@ -16,17 +16,17 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     public AudioClip[] DeathSounds;
     #region attacking
     public bool canAttack;
-    float timeUntileAttack = 1f;
+    float timeUntileAttack = 1.5f;
     float attackTimer;
 
     public bool agressive;
-    float timeUntileAgrresive = 2;
+    float timeUntileAgrresive = 1f;
     float aggresivetimer;
 
     bool isgetingDirection;
     bool pursue;
     bool isAlive;
-     float avoidradius = 4f;
+     float avoidradius = 3f;
     public GameObject ui;
 
     public Vector2 directionToPlayer;
@@ -37,14 +37,15 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     private AudioSource audioplayer;
     public bool PlayDeathSound;
 
-
+    Vector2 speedadjustment;
     #endregion
     public int health;
     public float vunrable = 0;
+    private Transform Exit;
 
     private void Start()
     {
-        attackTimer = timeUntileAttack;
+        attackTimer = Random.Range(0.5f, timeUntileAttack);
         aggresivetimer= timeUntileAgrresive;
         agressive= false;
         canAttack= false;
@@ -55,26 +56,28 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         spriteRenderer= GetComponent<SpriteRenderer>();
         isgetingDirection = true;
         ui = GameObject.FindGameObjectWithTag("GameController");
+        Exit = GameObject.FindGameObjectWithTag("Exit").transform;
 
     }
 
     private void Update()
     {
+        if (!canAttack)
+        {
+
             enemyBrain.CheckiFCanPersue(enemyAi);
+        }
      
         if(isgetingDirection)
         {
-            directionToPlayer = player.transform.position - transform.position ;
-            directionToPlayer.Normalize();
-
-            Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, avoidradius,7);
-            foreach (Collider2D enemy in nearbyEnemies)
+            if (pursue)
             {
-                if (enemy != gameObject) // Ignore self
-                {
-                    Vector2 avoidanceDirection = transform.position - enemy.transform.position;
-                    directionToPlayer += avoidanceDirection.normalized;
-                }
+                GetDirection(player.transform);
+
+            }
+            else
+            {
+                GetDirection(Exit);
             }
 
         }
@@ -100,7 +103,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         {
             if(Vector2.Distance(transform.position, player.transform.position) > 8)
             {
-               MoveToTarget(4,directionToPlayer);
+               MoveToTarget(7,directionToPlayer);
                 AgreasiveTimer();
 
             }
@@ -133,6 +136,8 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
             }
             else if (canAttack)
             {
+                Death();
+
                 animator.SetBool("Kick", true);
             }
         }
@@ -145,13 +150,15 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         }
         else if(canAttack)
         {
+
             animator.SetBool("Kick", true);
 
         }
         else
         {
-            DisableAttackAnimation();
+            MoveToTarget(5, directionToPlayer);
         }
+       
     }
     public void MoveToTarget(int speed, Vector2 direction)
     {
@@ -170,7 +177,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         }
         animator.SetBool("Right", (angle <= 45 && angle >= -45));
         //animator.SetBool("Kick", kick);
-        rb2d.velocity = direction * speed;
+        rb2d.velocity = (direction + speedadjustment )* speed;
     }
     public void EnablePursue()
     {
@@ -206,7 +213,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     {
         canAttack = false;
         agressive = false;
-        attackTimer = timeUntileAttack;
+        attackTimer = Random.Range(1f, timeUntileAttack);
         aggresivetimer = timeUntileAttack;
         animator.SetBool("Kick", false);
         spriteRenderer.color = Color.white;
@@ -215,7 +222,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     }
     public void AddforceToDirection()
     {
-        rb2d.velocity = directionToPlayer * 50;
+        rb2d.velocity = directionToPlayer * 40;
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
@@ -223,7 +230,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         {
             Debug.Log("kicked");
             player.GetComponent<PlayerBallSliding>().TakeDamage();
-            player.GetComponent<Rigidbody2D>().velocity = player.GetComponent<Transform>().position - gameObject.transform.position * 1 * 3;
+            player.GetComponent<Rigidbody2D>().velocity = player.GetComponent<Transform>().position - gameObject.transform.position * 1.5f * 3;
         }
         if (collision.gameObject.CompareTag("wall") && vunrable > 0)
         {
@@ -233,12 +240,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
 
     public void TakeDamage()
     {
-        ///takes damge
-        ui.GetComponent<GameUI>().score++;
-        /*Destroy(gameObject);*/
-        //Debug.Log("im Hit!!!");
-        vunrable = 3;
-       // rb2d.constraints = RigidbodyConstraints2D.None;
+       
         health--;
         if (health < 0 )
         {
@@ -272,16 +274,53 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     public void OnCollisionExit2D(Collision2D collision)
     {
     }
+    public void GetDirection(Transform target)
+    {
+        directionToPlayer = target.transform.position - transform.position;
+        directionToPlayer.Normalize();
+        speedadjustment = Vector2.zero;
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, avoidradius, 7);
+        foreach (Collider2D enemy in nearbyEnemies)
+        {
+            if (enemy != gameObject) // Ignore self
+            {
+                if (enemy.transform.position.x > transform.position.x)
+                {
+                    speedadjustment = new Vector2(-0.5f, 0);
+                }
+                else if (enemy.transform.position.x < transform.position.x)
+                {
+                    speedadjustment = new Vector2(1f, 0);
+                }
+            }
+        }
+    }
     public void Death()
     {
-        if (pursue)
-        {
-            enemyBrain.pursures--;
+        
+            enemyBrain.EnemyDead();
+            DiablePursue();
 
-        }
+        
     }
     public bool GetPursue()
     {
         return pursue;
     }
+    public void DiablePursue()
+    {
+        pursue = false;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+

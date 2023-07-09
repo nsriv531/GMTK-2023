@@ -56,7 +56,7 @@ MonoBehaviour:
   timer: 0
   spawnTick: 0.1
   pos: {fileID: 7387520311340119730}
-  maxSpawn: 5
+  maxSpawn: 3
 --- !u!58 &-7215724482453887990
 CircleCollider2D:
   m_ObjectHideFlags: 0

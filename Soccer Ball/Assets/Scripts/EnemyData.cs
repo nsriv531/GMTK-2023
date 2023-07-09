@@ -17,6 +17,11 @@ public class EnemyData : ScriptableObject
     }
     public void EnemyDead()
     {
-        pursures--;
+      
+        
+            pursures--;
+
+        
+        
     }
 }
