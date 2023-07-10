@@ -97,7 +97,7 @@ public class PlayerBalls : MonoBehaviour
         if (dashing >= 1)
         {
             dashing -= Time.deltaTime;
-            attack.AattackTheEnemy();
+            attack.AattackTheEnemy(6);
 
         }
         if (dashing <= 1)

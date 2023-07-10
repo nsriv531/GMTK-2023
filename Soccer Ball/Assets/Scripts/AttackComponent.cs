@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -6,17 +7,20 @@ using UnityEngine;
 public class AttackComponent : MonoBehaviour
 {
 
-    private IDamagable enemyHitData;
+    public IDamagable enemyHitData;
 
     public AudioSource audioPlayer;
-
+    public event Action OnattackFound;
+    private void Start()
+    {
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GetEnemy(collision);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        RemoveEnmyRefrance(collision);
+        RemoveEnmyRefrance();
     }
 
     /// <summary>
@@ -26,41 +30,39 @@ public class AttackComponent : MonoBehaviour
     public void GetEnemy(Collider2D collision)
     {
         IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+        if (collision.CompareTag("Player"))
+        {
+            damagable = collision.gameObject.GetComponent<IDamagable>();
+        }
 
         if (damagable != null)
         {
             enemyHitData = damagable;
         }
-        else
-        {
-            Debug.Log(" target does not posses Idamagble");
-        }
+        
     }
 
     /// <summary>
     /// removes the enemy refrance if they leave the hit detection
     /// </summary>
-    public void RemoveEnmyRefrance(Collider2D collision)
+    public void RemoveEnmyRefrance()
     {
         enemyHitData = null;
 
     }
 
-    public void AattackTheEnemy()
+    public void AattackTheEnemy(float damage)
     {
         if(enemyHitData != null)
         {
-            enemyHitData.TakeDamage(5);
+            enemyHitData.TakeDamage(damage);
             enemyHitData = null;
 
+     
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject)
-        {
-            audioPlayer.Play();
-        }
-    }
+    
+
+
 }

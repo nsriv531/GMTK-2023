@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface  IDamagable 
 {
-    public void TakeDamage(int meter);
+    public void TakeDamage(float meter);
 
 
 }

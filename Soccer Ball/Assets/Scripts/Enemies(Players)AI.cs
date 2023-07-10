@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemiesPlayersAI : MonoBehaviour,IDamagable
+public class EnemiesPlayersAI : MonoBehaviour
 {
 
     public Rigidbody2D rb;
@@ -115,7 +115,7 @@ public class EnemiesPlayersAI : MonoBehaviour,IDamagable
         if (collision.gameObject == ball && kickCoolDown == 0) {
             Debug.Log("kicked");
             kick = true;
-            ball.GetComponent<PlayerBallSliding>().TakeDamage();
+           // ball.GetComponent<PlayerBallSliding>().TakeDamage();
             ball.GetComponent<Rigidbody2D>().velocity = ball.GetComponent<Transform>().position - gameObject.transform.position * speed * 3;
             kickCoolDown = kickCooltime;
         }

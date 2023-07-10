@@ -9,6 +9,7 @@ TagManager:
   - HealthBar
   - PlayerColider
   - Enemies
+  - Exit
   layers:
   - Default
   - TransparentFX

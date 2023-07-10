@@ -11,7 +11,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     [SerializeField]
     private EnemyAiVer2 enemyAi;
     private SpriteRenderer spriteRenderer;
-
+    private AttackComponent attackComponent;
     [SerializeField]
     public AudioClip[] DeathSounds;
     #region attacking
@@ -39,9 +39,11 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
 
     Vector2 speedadjustment;
     #endregion
-    public int health;
-    public float vunrable = 0;
+
+    public float Health;
     private Transform Exit;
+    private bool isGambling;
+    
 
     private void Start()
     {
@@ -57,6 +59,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         isgetingDirection = true;
         ui = GameObject.FindGameObjectWithTag("GameController");
         Exit = GameObject.FindGameObjectWithTag("Exit").transform;
+        attackComponent = GetComponentInChildren<AttackComponent>();
 
     }
 
@@ -136,8 +139,8 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
             }
             else if (canAttack)
             {
-                Death();
-
+               // Death();
+               attackComponent.AattackTheEnemy(5);
                 animator.SetBool("Kick", true);
             }
         }
@@ -224,35 +227,37 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     {
         rb2d.velocity = directionToPlayer * 40;
     }
+    /**
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("kicked");
-            player.GetComponent<PlayerBallSliding>().TakeDamage(5);
-            player.GetComponent<Rigidbody2D>().velocity = player.GetComponent<Transform>().position - gameObject.transform.position * 1.5f * 3;
-        }
-        if (collision.gameObject.CompareTag("wall") && vunrable > 0)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    public void TakeDamage(int meter)
-    {
-       
-        health--;
-        if (health < 0 )
-        {
-            int number = Random.Range(0, deathSounds.Length);
-            AudioClip deathsound = deathSounds[number];
-            if(!audioplayer.isPlaying)
+            if (isGambling)
             {
-                audioplayer.clip = deathsound;
-                audioplayer.Play();
+                Debug.Log("kicked");
+                //player.GetComponent<PlayerBallSliding>().TakeDamage(5);
+                //player.GetComponent<Rigidbody2D>().velocity = player.GetComponent<Transform>().position - gameObject.transform.position * 1.5f * 3;
+
+            }
+            else
+            {
+                
 
             }
         }
+
+    }
+    **/
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
+        if(Health <= 0) {
+            Death();
+            gameObject.SetActive(false);
+            
+        
+        }
+        Debug.Log("Damage: "+ damage);
     }
 
   
@@ -293,6 +298,7 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
     {
         pursue = false;
     }
+   
 }
 
 
