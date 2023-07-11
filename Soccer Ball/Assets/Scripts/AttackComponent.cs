@@ -11,6 +11,7 @@ public class AttackComponent : MonoBehaviour
 
     public AudioSource audioPlayer;
     public event Action OnattackFound;
+    public GameEvent gameEvent;
     private void Start()
     {
     }
@@ -60,6 +61,10 @@ public class AttackComponent : MonoBehaviour
     {
         if(enemyHitData != null)
         {
+            if (transform.parent.CompareTag("Player"))
+            {
+                gameEvent.onEnemyHit?.Invoke();
+            }
             enemyHitData.TakeDamage(damage);
             enemyHitData = null;
 

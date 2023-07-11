@@ -47,8 +47,8 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
 
     private void Start()
     {
-        attackTimer = Random.Range(0.5f, timeUntileAttack);
-        aggresivetimer= timeUntileAgrresive;
+        attackTimer = Random.Range(0.1f, timeUntileAttack);
+        aggresivetimer=Random.Range(0.2f,  timeUntileAgrresive);
         agressive= false;
         canAttack= false;
         rb2d= GetComponent<Rigidbody2D>();
@@ -106,13 +106,13 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         {
             if(Vector2.Distance(transform.position, player.transform.position) > 8)
             {
-               MoveToTarget(7,directionToPlayer);
+               MoveToTarget(7,directionToPlayer, true);
                 AgreasiveTimer();
 
             }
             else
             {
-                MoveToTarget(0, directionToPlayer);
+                MoveToTarget(0, directionToPlayer, true);
 
                 AgreasiveTimer();
             }
@@ -125,13 +125,13 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
             {
                 if (Vector2.Distance(transform.position, player.transform.position) > 5)
                 {
-                    MoveToTarget(10, directionToPlayer);
+                    MoveToTarget(10, directionToPlayer,true);
                     AttackTimer();
 
                 }
                 else
                 {
-                    MoveToTarget(0, directionToPlayer);
+                    MoveToTarget(0, directionToPlayer,true);
                     AttackTimer();
 
                 }
@@ -159,17 +159,19 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         }
         else
         {
-            MoveToTarget(5, directionToPlayer);
         }
        
     }
-    public void MoveToTarget(int speed, Vector2 direction)
+    public void MoveToTarget(int speed, Vector2 direction, bool IsAttacking)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         animator.SetBool("Up", (angle >= 45 && angle <= 135));
         animator.SetBool("Down", (angle <= -45 && angle >= -135));
         animator.SetBool("Left", (angle >= 135 || angle <= -135));
+
+        
+
         if(angle >= 135 || angle <= -135)
         {
             spriteRenderer.flipX = true;
@@ -180,7 +182,16 @@ public class EnemyAiVer2 : MonoBehaviour,IDamagable
         }
         animator.SetBool("Right", (angle <= 45 && angle >= -45));
         //animator.SetBool("Kick", kick);
+        if (IsAttacking)
+        {
         rb2d.velocity = (direction + speedadjustment )* speed;
+
+        }
+        else
+        {
+            rb2d.velocity = (direction + speedadjustment) * speed;
+
+        }
     }
     public void EnablePursue()
     {

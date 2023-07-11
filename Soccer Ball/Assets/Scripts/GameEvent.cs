@@ -12,4 +12,9 @@ public class GameEvent : ScriptableObject
     public Action OnStageClear;
     public Action OnGameStart;
     public Action<float> onTimerChange;
+    public Action<int> onComboMeterIncrease;
+    public Action  OnComboMeterReset;
+    public Action OnPlayerDamaged;
+    public Action onEnemyHit;
+    public Action onGameOver;
 }

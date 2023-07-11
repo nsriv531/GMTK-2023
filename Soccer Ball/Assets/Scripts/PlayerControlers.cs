@@ -29,7 +29,7 @@ public class PlayerControlers : MonoBehaviour,IDamagable
     public Vector2Int MovementDirection;
 
     public float elpseMoveTime;
-    public float duration = 0.4f;
+    public float duration = 1f;
     public bool isHit;
 
     public bool canmove;
@@ -57,7 +57,7 @@ public class PlayerControlers : MonoBehaviour,IDamagable
 
     private void Update()
     {
-        if(canmove)
+        if(canmove && !isHit)
         {
          MovementDirection = new Vector2Int((int)Input.GetAxisRaw("Horizontal"), (int)Input.GetAxisRaw("Vertical"));
             anime.SetFloat("YAxisRoll",Mathf.Abs( MovementDirection.y));
@@ -71,10 +71,7 @@ public class PlayerControlers : MonoBehaviour,IDamagable
              Dash();
 
         }
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            TakeDamage(5);
-        }
+     
 
     }
     // Update is called once per frame
@@ -83,6 +80,8 @@ public class PlayerControlers : MonoBehaviour,IDamagable
         if (canmove && MovementDirection != Vector2Int.zero && !isHit)
         {
             rb.AddForce(MovementDirection * 45);
+            anime.Play("Roll Up");
+
 
         }
     }
@@ -96,10 +95,15 @@ public class PlayerControlers : MonoBehaviour,IDamagable
     }
     public void TakeDamage(float takeDamage)
     {
+            rb.velocity = Vector2.zero;
         Debug.Log("PlayerHit");
-        AddForce(10);
+        if (!isHit)
+        {
 
-        StopDashing(true);
+            playerEvents.OnPlayerDamaged?.Invoke();
+            StopDashing(true);
+            StartCoroutine(MoveToGoal());
+        }
     }
     public void Dash()
     {
@@ -115,12 +119,12 @@ public class PlayerControlers : MonoBehaviour,IDamagable
                 dashAngle = MouseDirection();
                 rb.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
                 canmove= false;
-            anime.SetFloat("YAxisRoll", 0);
+                anime.Play("Roll Left");
 
-            anime.SetFloat("Xaxisroll", Mathf.Abs(1));
+           
 
 
-            playerEvents.onChargeValue?.Invoke(DashValue);
+            //playerEvents.onChargeValue?.Invoke(DashValue);
             }
             else if (Input.GetKeyUp(KeyCode.Space) && !isDashing && DashAmount >0)
             {
@@ -134,7 +138,7 @@ public class PlayerControlers : MonoBehaviour,IDamagable
             }
             if(Time.time < dashElpssetime + dashDuration && isDashing)
              {
-                    attack.AattackTheEnemy(5 );
+                    attack.AattackTheEnemy(0 );
                 ballSprite.color = Color.red;
                 trailRenderer.enabled = true;
             //change this is a quick fix
@@ -161,18 +165,35 @@ public class PlayerControlers : MonoBehaviour,IDamagable
    
     private IEnumerator MoveToGoal()
     {
-        
-         elpseMoveTime = duration;
+        isHit = true;
+        Vector2 angleTOnet = Net.transform.position - transform.position;
+        float angle = Mathf.Atan2(angleTOnet.y, angleTOnet.x) * Mathf.Rad2Deg;
+        rb.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+
+        elpseMoveTime = duration;
 
         while(elpseMoveTime > 0){
-
+            Debug.Log("start");
+            rb.excludeLayers = LayerMask.GetMask("Enemy");
             elpseMoveTime-= Time.deltaTime;
 
+            ballSprite.color= Color.yellow;
+            rb.velocity = transform.right * 35;
+
+            if(elpseMoveTime <=0)
+            {
+            isHit = false;
+                break;
+
+            }
            
              yield return null;
         }
-        rb.velocity = Vector2.one;
-        isHit= false;
+        rb.excludeLayers = LayerMask.GetMask("Nothing");
+
+        ballSprite.color = Color.white;
+
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -190,7 +211,6 @@ public class PlayerControlers : MonoBehaviour,IDamagable
         AddForce(5);
 
         trailRenderer.enabled = false;
-        anime.SetFloat("Xaxisroll", Mathf.Abs(0));
 
         canmove = true;
         ballSprite.color = Color.white;
@@ -205,6 +225,10 @@ public class PlayerControlers : MonoBehaviour,IDamagable
 
         playerEvents.onChargeFirection?.Invoke(angle);
         return angle;
+    }
+    public bool ReturnPlayerIsHit()
+    {
+        return isHit;
     }
 }
 
