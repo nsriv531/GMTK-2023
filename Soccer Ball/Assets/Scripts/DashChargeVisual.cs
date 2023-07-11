@@ -8,7 +8,7 @@ public class DashChargeVisual : MonoBehaviour
     public GameObject DirectionArrow;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    public PlayerEvents playerEvents;
+    public GameEvent playerEvents;
     private Transform Player;
     void Start()
     {
@@ -35,6 +35,14 @@ public class DashChargeVisual : MonoBehaviour
     {
         spriteRenderer.enabled = true;
         animator.SetFloat("charge", chargeValue);
+        if(chargeValue> 0.9f)
+        {
+            spriteRenderer.color= Color.red;
+        }
+        else
+        {
+            spriteRenderer.color= Color.white;
+        }
        transform.position= new Vector2(Player.position.x, Player.position.y-2.5f);
     }
     public void DashDirection(float angle)

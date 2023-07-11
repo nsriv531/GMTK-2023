@@ -29,7 +29,12 @@ public class AttackComponent : MonoBehaviour
     /// <param name="collision"></param>
     public void GetEnemy(Collider2D collision)
     {
-        IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+        IDamagable damagable = null;
+        if (gameObject.transform.parent.CompareTag("Player"))
+        {
+             damagable = collision.gameObject.GetComponent<IDamagable>();
+
+        }
         if (collision.CompareTag("Player"))
         {
             damagable = collision.gameObject.GetComponent<IDamagable>();

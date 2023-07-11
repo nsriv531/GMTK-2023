@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerBallSliding : MonoBehaviour,IDamagable
+public class PlayerControlers : MonoBehaviour,IDamagable
 {
 
     #region Refranceses
@@ -33,9 +33,14 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     public bool isHit;
 
     public bool canmove;
+    public int DashAmount;
+
+    private float dashUseReset = 1.5f;
+
+    private float dashUseElapseTime;
 
 
-    public PlayerEvents playerEvents;
+    public GameEvent playerEvents;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +51,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
         trailRenderer= GetComponent<TrailRenderer>();
         ballSprite= GetComponent<SpriteRenderer>();
         canmove = true;
+        trailRenderer.enabled = false;
         
     }
 
@@ -54,6 +60,9 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
         if(canmove)
         {
          MovementDirection = new Vector2Int((int)Input.GetAxisRaw("Horizontal"), (int)Input.GetAxisRaw("Vertical"));
+            anime.SetFloat("YAxisRoll",Mathf.Abs( MovementDirection.y));
+            anime.SetFloat("YAxisRoll", Mathf.Abs(MovementDirection.x));
+
 
         }
 
@@ -73,7 +82,7 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     {
         if (canmove && MovementDirection != Vector2Int.zero && !isHit)
         {
-        rb.velocity = 10 * MovementDirection;
+            rb.AddForce(MovementDirection * 45);
 
         }
     }
@@ -94,36 +103,60 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     }
     public void Dash()
     {
-        if (Input.GetKey(KeyCode.Space) && !isDashing )
-        {
-            MovementDirection= Vector2Int.zero;
-            float completedTime = elapsetime/dashChargDuration;
-            elapsetime += Time.deltaTime ;
-            DashValue = Mathf.Lerp(0,1,completedTime);
-            dashAngle = MouseDirection();
-            rb.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+        
+
+
+            if (Input.GetKey(KeyCode.Space) && !isDashing && DashAmount > 0)
+            {
+                MovementDirection= Vector2Int.zero;
+                float completedTime = elapsetime/dashChargDuration;
+                elapsetime += Time.deltaTime ;
+                DashValue = Mathf.Lerp(0,1,completedTime);
+                dashAngle = MouseDirection();
+                rb.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+                canmove= false;
+            anime.SetFloat("YAxisRoll", 0);
+
+            anime.SetFloat("Xaxisroll", Mathf.Abs(1));
+
 
             playerEvents.onChargeValue?.Invoke(DashValue);
-        }
-        else if (Input.GetKeyUp(KeyCode.Space) && !isDashing)
-        {
-            canmove= false;
-            dashElpssetime = Time.time;
-            elapsetime= 0;
-            rb.transform.rotation = Quaternion.AngleAxis(dashAngle, Vector3.forward);
+            }
+            else if (Input.GetKeyUp(KeyCode.Space) && !isDashing && DashAmount >0)
+            {
+                DashAmount--;
+                dashUseElapseTime = dashUseReset;
+                dashElpssetime = Time.time;
+                elapsetime= 0;
+                rb.transform.rotation = Quaternion.AngleAxis(dashAngle, Vector3.forward);
 
-            isDashing = true;
+                isDashing = true;
+            }
+            if(Time.time < dashElpssetime + dashDuration && isDashing)
+             {
+                    attack.AattackTheEnemy(5 );
+                ballSprite.color = Color.red;
+                trailRenderer.enabled = true;
+            //change this is a quick fix
+
+            MoveToDirection(Dashspeed );
+            
+             }
+             else if(Time.time > dashElpssetime + dashDuration && isDashing)
+              {
+               StopDashing(false);
+              }
+        
+        if(DashAmount<= 0)
+        {
+            dashUseElapseTime -= Time.deltaTime * 1f;
+            playerEvents.OnChargCoolDown?.Invoke(dashUseElapseTime);
+
+            if (dashUseElapseTime <= 0)
+            {
+                DashAmount++;
+            }
         }
-        if(Time.time < dashElpssetime + dashDuration && isDashing)
-         {
-                attack.AattackTheEnemy(5 * DashValue);
-            ballSprite.color = Color.red;
-                MoveToDirection(Dashspeed * DashValue);
-         }
-         else if(Time.time > dashElpssetime + dashDuration && isDashing)
-          {
-           StopDashing(false);
-          }
     }
    
     private IEnumerator MoveToGoal()
@@ -156,7 +189,9 @@ public class PlayerBallSliding : MonoBehaviour,IDamagable
     {
         AddForce(5);
 
-      
+        trailRenderer.enabled = false;
+        anime.SetFloat("Xaxisroll", Mathf.Abs(0));
+
         canmove = true;
         ballSprite.color = Color.white;
 

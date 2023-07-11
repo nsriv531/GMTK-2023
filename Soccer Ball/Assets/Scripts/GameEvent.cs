@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PlayerEvents : ScriptableObject
+public class GameEvent : ScriptableObject
 {
     public Action<float> onChargeValue;
     public Action<float> onChargeFirection;
+    public Action<float> OnChargCoolDown;
+    public Action OnStageClear;
+    public Action OnGameStart;
+    public Action<float> onTimerChange;
 }

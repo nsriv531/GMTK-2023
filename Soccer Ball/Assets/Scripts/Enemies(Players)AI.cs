@@ -90,7 +90,7 @@ public class EnemiesPlayersAI : MonoBehaviour
     public void TakeDamage()
     {
         ///takes damge
-        ui.GetComponent<GameUI>().score++;
+      //  ui.GetComponent<GameUI>().score++;
         /*Destroy(gameObject);*/
         //Debug.Log("im Hit!!!");
         vunrable = 3;

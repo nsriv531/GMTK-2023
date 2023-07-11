@@ -2,35 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
 
-    public int health;
-    private int maxHealth = 100;
-    public int score;
-    public float time;
-    public GameObject scoreBar;
-    public GameObject healthBar;
-    public GameObject timer;
+    public Image CoolDownImage;
+    public GameEvent playerEvents;
+    public TextMeshProUGUI timerui;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        health = 100;
-        score = 0;
+        playerEvents.OnChargCoolDown += Cooldown;
+        playerEvents.onTimerChange += DisplayTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (health > maxHealth) {
-            health = maxHealth;
-        }
-        time += Time.deltaTime;
-        scoreBar.GetComponent<TextMeshProUGUI>().text = "Score " + score.ToString();
-        healthBar.GetComponent<TextMeshProUGUI>().text = "Health " + health.ToString() + "/" + maxHealth.ToString();
-        timer.GetComponent<TextMeshProUGUI>().text = Mathf.RoundToInt(time).ToString() + ":" + Mathf.RoundToInt((time - Mathf.FloorToInt(time)) * 100).ToString();
+     
+    }
+    public void Cooldown(float cooldown)
+    {
+        CoolDownImage.fillAmount= cooldown;
+    }
+    public void DisplayTime(float timer)
+    {
+        float minutes = Mathf.FloorToInt(timer / 60);
+        float seconds = Mathf.FloorToInt(timer% 60);
+        timerui.text = string.Format("{1:00}", minutes, seconds);
     }
 }

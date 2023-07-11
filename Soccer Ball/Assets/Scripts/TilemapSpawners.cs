@@ -28,6 +28,7 @@ public class TilemapSpawners : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /**
         if (timer <= 0)
         {
             enemycount = GameObject.FindGameObjectsWithTag("Enemies").Length;
@@ -35,7 +36,7 @@ public class TilemapSpawners : MonoBehaviour
             Vector3 oldPos = pos.position;
             Vector3 spawnPos = (Random.insideUnitCircle * 12);
             spawnPos = oldPos + spawnPos;
-            /*Debug.Log("Spawn Attempt" + spawnType + ", " + spawnPos);*/
+            Debug.Log("Spawn Attempt" + spawnType + ", " + spawnPos);
             if (healthSpawnrate >= spawnType)
             {
                 Instantiate(healthPickUp1, spawnPos, Quaternion.identity);
@@ -59,6 +60,7 @@ public class TilemapSpawners : MonoBehaviour
         else {
             timer -= Time.deltaTime;
         }
+**/
     }
     
 }

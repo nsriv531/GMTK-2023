@@ -24,7 +24,6 @@ public class HealthItem1 : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("hit ball");
-            ui.GetComponent<GameUI>().health += 10;
             Destroy(gameObject);
         }
     }
